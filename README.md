@@ -17,3 +17,9 @@
 ## 使用说明
 - 直接双击`gradle projects`中`fuck`命令
 - 或者命令行执行```./gradlew fuck```
+
+## 注意事项
+使用`kotlin`编写的项目可能会遇到`.kt`文件无法生成`javadoc`情况，可以在`root build.gradle`文件下添加
+```
+tasks.getByPath(":your module:releaseAndroidJavadocs").enabled = false
+```
