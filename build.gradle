@@ -1,0 +1,9 @@
+buildscript {
+    ext.library_version = '1.0.0'
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.novoda:bintray-release:0.8.1'
+    }
+}
