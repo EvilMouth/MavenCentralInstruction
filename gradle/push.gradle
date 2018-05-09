@@ -7,19 +7,19 @@ def user = properties.getProperty("bintray.user")
 def key = properties.getProperty("bintray.apikey")
 
 publish {
-    repoName = 'maven'
-    userOrg = 'zyhang'
-    groupId = 'com.zyhang'
-    artifactId = ''
-    publishVersion = library_version
-    licences = ['Apache-2.0']
-    desc = ''
-    website = ''
-    issueTracker = ''
-    repository = ''
+    repoName = 'maven'                  // 代码仓库名称。 默认设置为“maven”
+    userOrg = 'zyhang'                  // 上传的组织名称
+    groupId = 'com.zyhang'              
+    artifactId = ''                     // 与groupId组合
+    publishVersion = library_version    // 仓库版本号
+    licences = ['Apache-2.0']           // 开源协议
+    desc = ''                           // 仓库说明
+    website = ''                        // 仓库地址
+    issueTracker = ''                   // 仓库issue地址
+    repository = ''                     // 仓库VCS地址
 
-    bintrayUser = user
-    bintrayKey = key
+    bintrayUser = user                  // bintray账号名
+    bintrayKey = key                    // bintray账号api key
 }
 
 task fuck(group: 'publishing') {
@@ -28,13 +28,8 @@ task fuck(group: 'publishing') {
             throw new MissingPropertyException('missing bintray.users or bintray.apikey in local.properties')
         }
     }
-    doLast {
-        sh()
-    }
-}
-
-def sh() {
+} << {
     exec {
-        commandLine 'sh', '../gradle/push.sh'
+        commandLine '../gradlew', 'clean', 'build', 'bintrayUpload', '-PdryRun=false'
     }
 }
