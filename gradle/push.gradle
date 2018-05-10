@@ -30,9 +30,10 @@ task fuck(group: 'publishing') {
             throw new MissingPropertyException('missing bintray.users or bintray.apikey in local.properties')
         }
     }
-} << {
-    exec {
-        commandLine "../${getGradlewName()}", 'clean', 'build', 'bintrayUpload', '-PdryRun=false'
+    doLast {
+        exec {
+            commandLine "../${getGradlewName()}", 'clean', 'build', 'bintrayUpload', '-PdryRun=false'
+        }
     }
 }
 
