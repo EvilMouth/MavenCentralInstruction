@@ -1,5 +1,7 @@
 apply plugin: 'com.novoda.bintray-release'
 
+import org.apache.tools.ant.taskdefs.condition.Os
+
 // bintray
 Properties properties = new Properties()
 properties.load(project.rootProject.file('local.properties').newDataInputStream())
@@ -30,6 +32,14 @@ task fuck(group: 'publishing') {
     }
 } << {
     exec {
-        commandLine '../gradlew', 'clean', 'build', 'bintrayUpload', '-PdryRun=false'
+        commandLine "../${getGradlewName()}", 'clean', 'build', 'bintrayUpload', '-PdryRun=false'
+    }
+}
+
+static def getGradlewName() {
+    if (Os.isFamily(Os.FAMILY_WINDOWS)) {
+        return "gradlew.bat"
+    } else {
+        return "gradlew"
     }
 }
