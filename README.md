@@ -5,15 +5,22 @@
 ```
 .
 ├── README.md
-├── build.gradle        // root build.gradle
+├── build.gradle            // root build.gradle
 ├── gradle
-│   └── push.gradle     // add this file to your path
+│   └── push.gradle         // new file
+├── gradle.properties       // root properties
 ├── library
-│   └── build.gradle    // your library build.gradle
-└── local.properties    // configure your key
+│   ├── build.gradle        // module build.gradle
+│   └── gradle.properties   // module properties
+└── local.properties        // local file for configuring your key
 ```
 
 ## 使用说明
+
+### 配置
+- 根据目录结构添加或更新你的文件
+
+### 上传
 - 直接双击`fuck`命令（位于`Gradle projects`中`publishing`包下）
 - 或者命令行执行```./gradlew fuck```
 
@@ -21,4 +28,9 @@
 使用`kotlin`编写的项目可能会遇到`.kt`文件无法生成`javadoc`情况，可以在`root build.gradle`文件下添加
 ```
 tasks.getByPath(":your module:releaseAndroidJavadocs").enabled = false
+```
+
+## 快捷apply
+```
+apply from: 'https://raw.githubusercontent.com/izyhang/novoda-push/master/gradle/push.gradle'
 ```
