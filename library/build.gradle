@@ -1,5 +1,12 @@
 apply plugin: 'com.android.library'
 
-...
+android {
+    ...
+    defaultConfig {
+        ...
+        versionCode 1
+        versionName POM_PUBLISH_VERSION // 建议加上这句
+    }
+}
 
 apply from: '../gradle/push.gradle'
