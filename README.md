@@ -30,6 +30,15 @@
 tasks.getByPath(":your module:releaseAndroidJavadocs").enabled = false
 ```
 
+同样`javadoc`问题
+```
+tasks.withType(Javadoc) {
+    options.addStringOption('Xdoclint:none', '-quiet')
+    options.addStringOption('encoding', 'UTF-8')
+    options.addStringOption('charSet', 'UTF-8')
+}
+```
+
 ## 快捷apply
 ```
 apply from: 'https://raw.githubusercontent.com/izyhang/novoda-push/master/gradle/push.gradle'
