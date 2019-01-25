@@ -25,18 +25,23 @@
 - 或者命令行执行```./gradlew fuck```
 
 ## 注意事项
-使用`kotlin`编写的项目可能会遇到`.kt`文件无法生成`javadoc`情况，可以在`root build.gradle`文件下添加
+- 使用`kotlin`编写的项目可能会遇到`.kt`文件无法生成`javadoc`情况，可以在`root build.gradle`文件下添加
 ```
 tasks.getByPath(":your module:releaseAndroidJavadocs").enabled = false
 ```
 
-同样`javadoc`问题
+- 同样`javadoc`问题
 ```
 tasks.withType(Javadoc) {
     options.addStringOption('Xdoclint:none', '-quiet')
     options.addStringOption('encoding', 'UTF-8')
     options.addStringOption('charSet', 'UTF-8')
 }
+```
+
+- gradlew权限问题
+```gradle
+chmod +x gradlew
 ```
 
 ## 快捷apply
