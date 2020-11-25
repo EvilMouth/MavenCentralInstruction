@@ -1,3 +1,5 @@
+# deprecated
+
 # novoda-push
 使用[novoda](https://github.com/novoda/bintray-release)上传项目到`bintray`并打包到`jcenter`
 
