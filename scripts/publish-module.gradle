@@ -1,0 +1,86 @@
+apply plugin: 'maven-publish'
+apply plugin: 'signing'
+
+def isAndroid = project.plugins.hasPlugin('com.android.library')
+
+task sourcesJar(type: Jar) {
+    archiveClassifier.set('sources')
+    if (isAndroid) {
+        // For Android libraries
+        from android.sourceSets.main.java.srcDirs
+        from android.sourceSets.main.kotlin.srcDirs
+    } else {
+        // For pure Kotlin libraries, in case you have them
+        from sourceSets.main.java.srcDirs
+        from sourceSets.main.kotlin.srcDirs
+    }
+}
+
+artifacts {
+    archives sourcesJar
+}
+
+group = PUBLISH_GROUP_ID
+version = PUBLISH_VERSION
+
+afterEvaluate {
+    publishing {
+        publications {
+            release(MavenPublication) {
+                // The coordinates of the library, being set from variables that
+                // we'll set up later
+                groupId PUBLISH_GROUP_ID
+                artifactId PUBLISH_ARTIFACT_ID
+                version PUBLISH_VERSION
+
+                // Two artifacts, the `aar` (or `jar`) and the sources
+                if (isAndroid) {
+                    from components.release
+                } else {
+                    from components.java
+                }
+
+                artifact sourcesJar
+//                artifact javadocJar
+
+                // Mostly self-explanatory metadata
+                pom {
+                    name = PUBLISH_ARTIFACT_ID
+//                    description = ''
+//                    url = ''
+//                    licenses {
+//                        license {
+//                            name = ''
+//                            url = ''
+//                        }
+//                    }
+//                    developers {
+//                        developer {
+//                            id = ''
+//                            name = ''
+//                            email = ''
+//                        }
+//                        // Add all other devs here...
+//                    }
+//
+//                    // Version control info - if you're using GitHub, follow the
+//                    // format as seen here
+//                    scm {
+//                        connection = ''
+//                        developerConnection = ''
+//                        url = ''
+//                    }
+                }
+            }
+        }
+    }
+}
+
+signing {
+    useInMemoryPgpKeys(
+            rootProject.ext["signing.keyId"],
+            rootProject.ext["signing.key"],
+            rootProject.ext["signing.password"],
+    )
+    sign publishing.publications
+}

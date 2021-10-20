@@ -1,0 +1,14 @@
+plugins {
+    id 'java-library'
+    id 'kotlin'
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_1_7
+    targetCompatibility = JavaVersion.VERSION_1_7
+}
+
+ext {
+    PUBLISH_ARTIFACT_ID = project.name
+}
+apply from: "$rootDir/scripts/publish-module.gradle"
