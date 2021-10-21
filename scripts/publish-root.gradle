@@ -28,6 +28,8 @@ if (snapshot) {
     println 'snapshot build, force version with suffix "-SNAPSHOT"'
     PUBLISH_VERSION += "-SNAPSHOT"
 }
+println "group: $PUBLISH_GROUP_ID"
+println "version: $PUBLISH_VERSION"
 
 group = PUBLISH_GROUP_ID
 version = PUBLISH_VERSION // necessary since the plugin checks the project version (not the publication's version) in order to decide whether to publish to the snapshots or staging repo
