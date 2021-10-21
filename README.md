@@ -1,6 +1,11 @@
+![GitHub Workflow Status](https://img.shields.io/github/workflow/status/evilmouth/mavencentralinstruction/Publish)
+![GitHub tag (latest by date)](https://img.shields.io/github/v/tag/evilmouth/mavencentralinstruction?label=latest_tag)
+
 # How to publish lib to MavenCentral
 
-## 1. config local.properties
+## 1. config properties
+
+in local.properties
 
 ```properties
 signing.keyId=xxx
@@ -10,6 +15,15 @@ ossrhUsername=xxx
 ossrhPassword=xxx
 sonatypeStagingProfileId=xxx
 ```
+
+or env
+
+- SIGNING_KEY_ID=xxx
+- SIGNING_PASSWORD=xxx
+- SIGNING_KEY=xxx
+- OSSRH_USERNAME=xxx
+- OSSRH_PASSWORD=xxx
+- SONATYPE_STAGING_PROFILE_ID=xxx
 
 ## 2. config gradle scripts
 
