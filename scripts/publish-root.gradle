@@ -22,6 +22,9 @@ if (secretPropsFile.exists()) {
     ext["signing.key"] = System.getenv('SIGNING_KEY')
 }
 
+group = PUBLISH_GROUP_ID
+version = PUBLISH_VERSION // necessary since the plugin checks the project version (not the publication's version) in order to decide whether to publish to the snapshots or staging repo
+
 // Set up Sonatype repository
 nexusPublishing {
     repositories {
@@ -29,9 +32,6 @@ nexusPublishing {
             stagingProfileId = sonatypeStagingProfileId
             username = ossrhUsername
             password = ossrhPassword
-
-            group = PUBLISH_GROUP_ID
-            version = PUBLISH_VERSION
 
             nexusUrl.set(uri("https://s01.oss.sonatype.org/service/local/"))
             snapshotRepositoryUrl.set(uri("https://s01.oss.sonatype.org/content/repositories/snapshots/"))

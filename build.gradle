@@ -19,9 +19,12 @@ plugins {
 ext {
     PUBLISH_GROUP_ID = 'net.evilmouth'
     PUBLISH_VERSION = '1.0.0-SNAPSHOT'
+
+    BUILD_WITH_REMOTE_MAVEN = true
+    BUILD_WITH_LOCAL_MAVEN = true
 }
 apply from: "$rootDir/scripts/publish-root.gradle"
-
+apply from: "$rootDir/scripts/helper.gradle"
 
 task clean(type: Delete) {
     delete rootProject.buildDir

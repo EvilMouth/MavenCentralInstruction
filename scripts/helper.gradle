@@ -1,0 +1,40 @@
+ext {
+    useRemoteMaven = BUILD_WITH_REMOTE_MAVEN
+    useLocalMaven = BUILD_WITH_LOCAL_MAVEN
+
+    isCI = this.&isCI()
+    isGithubCI = this.&isGithubCI()
+    isJitpackCI = this.&isJitpackCI()
+
+    isCIFunc = this.&isCI
+    isGithubCIFunc = this.&isGithubCI
+    isJitpackCIFunc = this.&isJitpackCI
+
+    if (isCI) {
+        println "ci building, force building with project local dependencies"
+        useRemoteMaven = false
+        useLocalMaven = false
+    }
+    println "useRemoteMaven: $useRemoteMaven"
+    println "useLocalMaven: $useLocalMaven"
+}
+
+static boolean isCI() {
+    return isGithubCI() || isJitpackCI()
+}
+
+static boolean isGithubCI() {
+    def map = System.getenv()
+    if (map == null) {
+        return false
+    }
+    return map.containsKey("CI") && map.get("CI") == "true"
+}
+
+static boolean isJitpackCI() {
+    def map = System.getenv()
+    if (map == null) {
+        return false
+    }
+    return map.containsKey("JITPACK") && map.get("JITPACK") == "true"
+}
