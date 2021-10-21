@@ -25,6 +25,7 @@ if (secretPropsFile.exists()) {
 }
 
 if (snapshot) {
+    println 'snapshot build, force version with suffix "-SNAPSHOT"'
     PUBLISH_VERSION += "-SNAPSHOT"
 }
 
