@@ -39,10 +39,17 @@ buildscript {
 // add below codeblock after buildscript{}
 plugins {
     id("io.github.gradle-nexus.publish-plugin") version "1.1.0"
+    id("org.jetbrains.dokka") version "1.5.30" // for javadoc
 }
 ext {
     PUBLISH_GROUP_ID = 'net.evilmouth'
     PUBLISH_VERSION = '1.0.0-SNAPSHOT'
+    
+    // optional
+    PUBLISH_LICENSE_NAME = your project lincense // default APACHE LICENSE, VERSION 2.0
+    PUBLISH_LICENSE_URL = your project lincense url
+    PUBLISH_PUBLISH_DEVELOPER_NAME = your name
+    PUBLISH_PUBLISH_DEVELOPER_EMAIL = your email
 }
 apply from: 'https://raw.githubusercontent.com/EvilMouth/MavenCentralInstruction/1.0.0/scripts/publish-root.gradle'
 ```
@@ -60,9 +67,10 @@ apply from: 'https://raw.githubusercontent.com/EvilMouth/MavenCentralInstruction
 
 ## optional
 
-### helper.gradle
+### apply helper script
 
 ```groovy
+// in root/build.gradle
 buildscripts {
   ext {
       BUILD_WITH_REMOTE_MAVEN = true
@@ -70,4 +78,47 @@ buildscripts {
   }
   apply from: 'https://raw.githubusercontent.com/EvilMouth/MavenCentralInstruction/1.0.0/scripts/helper.gradle'
 }
+```
+
+### Continuous integration with Github Actions
+
+```yml
+name: Publish
+
+on:
+  release:
+    # We'll run this workflow when a new GitHub release is created
+    types: [released]
+
+jobs:
+  publish:
+    name: Release build and publish
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v2
+      - name: Set up JDK 11
+        uses: actions/setup-java@v2
+        with:
+          distribution: adopt
+          java-version: 11
+
+        # Builds the release artifacts of the library
+      - name: Release build
+        run: ./gradlew assembleRelease
+
+        # Generates other artifacts (javadocJar is optional)
+      - name: Source jar and dokka
+        run: ./gradlew androidSourcesJar javadocJar
+
+        # Runs upload, and then closes & releases the repository
+      - name: Publish to MavenCentral
+        run: ./gradlew publishReleasePublicationToSonatypeRepository --max-workers 1 closeAndReleaseSonatypeStagingRepository
+        env:
+          OSSRH_USERNAME: ${{ secrets.OSSRH_USERNAME }}
+          OSSRH_PASSWORD: ${{ secrets.OSSRH_PASSWORD }}
+          SIGNING_KEY_ID: ${{ secrets.SIGNING_KEY_ID }}
+          SIGNING_PASSWORD: ${{ secrets.SIGNING_PASSWORD }}
+          SIGNING_KEY: ${{ secrets.SIGNING_KEY }}
+          SONATYPE_STAGING_PROFILE_ID: ${{ secrets.SONATYPE_STAGING_PROFILE_ID }}
 ```
