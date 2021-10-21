@@ -46,30 +46,30 @@ afterEvaluate {
                 // Mostly self-explanatory metadata
                 pom {
                     name = PUBLISH_ARTIFACT_ID
-//                    description = ''
-//                    url = ''
-//                    licenses {
-//                        license {
-//                            name = ''
-//                            url = ''
-//                        }
-//                    }
-//                    developers {
-//                        developer {
-//                            id = ''
-//                            name = ''
-//                            email = ''
-//                        }
-//                        // Add all other devs here...
-//                    }
-//
-//                    // Version control info - if you're using GitHub, follow the
-//                    // format as seen here
-//                    scm {
-//                        connection = ''
-//                        developerConnection = ''
-//                        url = ''
-//                    }
+                    description = extOrProperty('PUBLISH_DESCRIPTION')
+                    url = extOrProperty('PUBLISH_URL')
+                    licenses {
+                        license {
+                            name = extOrProperty('PUBLISH_LICENSE_NAME')
+                            url = extOrProperty('PUBLISH_LICENSE_URL')
+                        }
+                    }
+                    developers {
+                        developer {
+                            id = extOrProperty('PUBLISH_DEVELOPER_ID')
+                            name = extOrProperty('PUBLISH_DEVELOPER_NAME')
+                            email = extOrProperty('PUBLISH_DEVELOPER_EMAIL')
+                        }
+                        // Add all other devs here...
+                    }
+
+                    // Version control info - if you're using GitHub, follow the
+                    // format as seen here
+                    scm {
+                        connection = extOrProperty('PUBLISH_SCM_CONNECTION')
+                        developerConnection = extOrProperty('PUBLISH_SCM_DEVELOPERCONNECTION')
+                        url = extOrProperty('PUBLISH_SCM_URL')
+                    }
                 }
             }
         }
@@ -83,4 +83,8 @@ signing {
             rootProject.ext["signing.password"],
     )
     sign publishing.publications
+}
+
+Object extOrProperty(String key, String defaultValue = '') {
+    return project.ext.find(key) ?: findProperty(key) ?: defaultValue
 }
