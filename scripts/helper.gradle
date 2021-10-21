@@ -10,6 +10,7 @@ ext {
     isGithubCIFunc = this.&isGithubCI
     isJitpackCIFunc = this.&isJitpackCI
 
+    println "isCI: $isCI"
     if (isCI) {
         println "ci building, force building with project local dependencies"
         useRemoteMaven = false
