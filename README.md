@@ -109,7 +109,7 @@ jobs:
 
         # Generates other artifacts (javadocJar is optional)
       - name: Source jar and dokka
-        run: ./gradlew androidSourcesJar javadocJar
+        run: ./gradlew sourcesJar javadocJar
 
         # Runs upload, and then closes & releases the repository
       - name: Publish to MavenCentral
