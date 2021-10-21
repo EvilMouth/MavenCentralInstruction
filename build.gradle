@@ -24,7 +24,7 @@ plugins {
 }
 ext {
     PUBLISH_GROUP_ID = 'net.evilmouth'
-    PUBLISH_VERSION = '1.0.0-SNAPSHOT'
+    PUBLISH_VERSION = '1.0.0'
 }
 apply from: "$rootDir/scripts/publish-root.gradle"
 
