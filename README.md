@@ -51,7 +51,7 @@ ext {
     PUBLISH_PUBLISH_DEVELOPER_NAME = your name
     PUBLISH_PUBLISH_DEVELOPER_EMAIL = your email
 }
-apply from: 'https://raw.githubusercontent.com/EvilMouth/MavenCentralInstruction/1.0.0/scripts/publish-root.gradle'
+apply from: 'https://raw.githubusercontent.com/EvilMouth/MavenCentralInstruction/1.2.0/scripts/publish-root.gradle'
 ```
 
 ### 2.2 module/build.gardle
@@ -62,7 +62,7 @@ add below codeblock in end of every lib-module
 ext {
     PUBLISH_ARTIFACT_ID = project.name or custom
 }
-apply from: 'https://raw.githubusercontent.com/EvilMouth/MavenCentralInstruction/1.0.0/scripts/publish-module.gradle'
+apply from: 'https://raw.githubusercontent.com/EvilMouth/MavenCentralInstruction/1.2.0/scripts/publish-module.gradle'
 ```
 
 ## optional
@@ -76,7 +76,7 @@ buildscripts {
       BUILD_WITH_REMOTE_MAVEN = true
       BUILD_WITH_LOCAL_MAVEN = true
   }
-  apply from: 'https://raw.githubusercontent.com/EvilMouth/MavenCentralInstruction/1.0.0/scripts/helper.gradle'
+  apply from: 'https://raw.githubusercontent.com/EvilMouth/MavenCentralInstruction/1.2.0/scripts/helper.gradle'
 }
 ```
 
