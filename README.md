@@ -37,7 +37,7 @@ add below codeblock in end of every lib-module
 
 ```groovy
 ext {
-    PUBLISH_ARTIFACT_ID = project.name
+    PUBLISH_ARTIFACT_ID = project.name or custom
 }
 apply from: 'https://raw.githubusercontent.com/EvilMouth/MavenCentralInstruction/1.0.0/scripts/publish-module.gradle'
 ```
