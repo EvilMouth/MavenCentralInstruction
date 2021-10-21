@@ -5,15 +5,17 @@
 
 ## 1. config properties
 
+> this will require **sonatype account** and **gpg key**, you can find it [here](https://getstream.io/blog/publishing-libraries-to-mavencentral-2021/)
+
 in local.properties
 
 ```properties
-signing.keyId=xxx
+signing.keyId=xxx // gpg public key
 signing.password=xxx
-signing.key=xxx
-ossrhUsername=xxx
+signing.key=xxx // gpg private key base64 encode
+ossrhUsername=xxx // sonatype account
 ossrhPassword=xxx
-sonatypeStagingProfileId=xxx
+sonatypeStagingProfileId=xxx // sonatype nexus oss staging profile id
 ```
 
 or env
