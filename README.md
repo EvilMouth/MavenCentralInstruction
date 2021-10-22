@@ -89,7 +89,6 @@ buildscripts {
 name: Publish
 
 on:
-  workflow_dispatch:
   release:
     # We'll run this workflow when a new GitHub release is created
     types: [ released ]
