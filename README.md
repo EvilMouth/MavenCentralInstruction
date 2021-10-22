@@ -69,6 +69,9 @@ apply from: 'https://raw.githubusercontent.com/EvilMouth/MavenCentralInstruction
 
 ### apply helper script
 
+- detect ci build
+- supply parameters: [useRemoteMaven useLocalMaven isCI ...]
+
 ```groovy
 // in root/build.gradle
 buildscripts {
@@ -86,14 +89,17 @@ buildscripts {
 name: Publish
 
 on:
+  workflow_dispatch:
   release:
     # We'll run this workflow when a new GitHub release is created
-    types: [released]
+    types: [ released ]
 
 jobs:
   publish:
     name: Release build and publish
     runs-on: ubuntu-latest
+    env:
+      RELEASE: true
     steps:
       - name: Check out code
         uses: actions/checkout@v2
