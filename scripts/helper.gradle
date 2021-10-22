@@ -1,6 +1,8 @@
 ext {
-    useRemoteMaven = BUILD_WITH_REMOTE_MAVEN
-    useLocalMaven = BUILD_WITH_LOCAL_MAVEN
+    useRemoteMaven = extOrProperty("BUILD_WITH_REMOTE_MAVEN", "false").toString() == "true"
+    useLocalMaven = extOrProperty("BUILD_WITH_LOCAL_MAVEN", "false").toString() == "true"
+
+    extOrProperty = this.&extOrProperty
 
     isCI = this.&isCI()
     isGithubCI = this.&isGithubCI()
@@ -18,6 +20,10 @@ ext {
     }
     println "useRemoteMaven: $useRemoteMaven"
     println "useLocalMaven: $useLocalMaven"
+}
+
+Object extOrProperty(String key, String defaultValue = "") {
+    return project.ext.find(key) ?: findProperty(key) ?: defaultValue
 }
 
 static boolean isCI() {

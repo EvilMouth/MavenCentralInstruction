@@ -29,7 +29,7 @@ if (secretPropsFile.exists()) {
 if (release) {
     println 'release build, remove suffix "-SNAPSHOT" if exists'
     if (PUBLISH_VERSION.endsWith("-SNAPSHOT")) {
-        PUBLISH_VERSION.substring(0, PUBLISH_VERSION.length() - 9)
+        PUBLISH_VERSION = PUBLISH_VERSION.substring(0, PUBLISH_VERSION.length() - 9)
     }
 } else if (snapshot) {
     println 'snapshot build, force version with suffix "-SNAPSHOT"'
