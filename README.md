@@ -56,7 +56,7 @@ apply from: 'https://raw.githubusercontent.com/EvilMouth/MavenCentralInstruction
 
 ### 2.2 module/build.gardle
 
-add below codeblock in end of every lib-module
+add below codeblock in every lib-module
 
 ```groovy
 ext {
