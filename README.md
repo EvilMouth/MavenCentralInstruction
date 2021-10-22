@@ -48,8 +48,8 @@ ext {
     // optional
     PUBLISH_LICENSE_NAME = your project lincense // default APACHE LICENSE, VERSION 2.0
     PUBLISH_LICENSE_URL = your project lincense url
-    PUBLISH_PUBLISH_DEVELOPER_NAME = your name
-    PUBLISH_PUBLISH_DEVELOPER_EMAIL = your email
+    PUBLISH_DEVELOPER_NAME = your name
+    PUBLISH_DEVELOPER_EMAIL = your email
 }
 apply from: 'https://raw.githubusercontent.com/EvilMouth/MavenCentralInstruction/2.0.0/scripts/publish-root.gradle'
 ```
