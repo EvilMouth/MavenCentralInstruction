@@ -36,6 +36,10 @@ artifacts {
     archives sourcesJar
 }
 
+def PUBLISH_GROUP_ID = PUBLISH_GROUP_ID
+def PUBLISH_ARTIFACT_ID = extOrProperty("PUBLISH_ARTIFACT_ID", project.name)
+def PUBLISH_VERSION = PUBLISH_VERSION
+
 group = PUBLISH_GROUP_ID
 version = PUBLISH_VERSION
 
@@ -61,8 +65,8 @@ afterEvaluate {
 
                 // Mostly self-explanatory metadata
                 pom {
-                    name = PUBLISH_ARTIFACT_ID
-                    description = extOrProperty('PUBLISH_DESCRIPTION', "$group:$PUBLISH_ARTIFACT_ID:$version")
+                    name = extOrProperty("PUBLISH_NAME", PUBLISH_ARTIFACT_ID)
+                    description = extOrProperty('PUBLISH_DESCRIPTION', "$PUBLISH_GROUP_ID:$PUBLISH_ARTIFACT_ID:$PUBLISH_VERSION")
                     url = extOrProperty('PUBLISH_URL', removeSuffix(getGitHttpUrl(), ".git"))
                     licenses {
                         license {
@@ -82,8 +86,8 @@ afterEvaluate {
                     // Version control info - if you're using GitHub, follow the
                     // format as seen here
                     scm {
-                        connection = extOrProperty('PUBLISH_SCM_CONNECTION', "scm:git:" + getGitUrlCompose())
-                        developerConnection = extOrProperty('PUBLISH_SCM_DEVELOPERCONNECTION', "scm:git:ssh://" + getGitUrlCompose())
+                        connection = extOrProperty('PUBLISH_SCM_CONNECTION', "scm:git:" + getGitUrlComposition())
+                        developerConnection = extOrProperty('PUBLISH_SCM_DEVELOPERCONNECTION', "scm:git:ssh://" + getGitUrlComposition())
                         url = extOrProperty('PUBLISH_SCM_URL', removeSuffix(getGitHttpUrl(), ".git"))
                     }
                 }
@@ -127,13 +131,13 @@ static String getGitUrl() {
 static String getGitHttpUrl() {
     def url = getGitUrl()
     if (url.startsWith("git@")) {
-        return "https://" + getGitUrlCompose()
+        return "https://" + getGitUrlComposition()
     } else {
         return url
     }
 }
 
-static String getGitUrlCompose() {
+static String getGitUrlComposition() {
     def url = getGitUrl()
     if (url.startsWith("git@")) {
         def arr = url.replace("git@", "").split(":")

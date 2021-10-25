@@ -26,6 +26,9 @@ if (secretPropsFile.exists()) {
     ext["release"] = System.getenv('RELEASE')
 }
 
+def PUBLISH_GROUP_ID = PUBLISH_GROUP_ID
+def PUBLISH_VERSION = PUBLISH_VERSION
+
 if (release) {
     println 'release build, remove suffix "-SNAPSHOT" if exists'
     if (PUBLISH_VERSION.endsWith("-SNAPSHOT")) {

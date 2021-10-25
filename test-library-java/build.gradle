@@ -8,7 +8,7 @@ java {
     targetCompatibility = JavaVersion.VERSION_1_8
 }
 
-ext {
-    PUBLISH_ARTIFACT_ID = project.name
-}
+//ext {
+//    PUBLISH_ARTIFACT_ID = project.name
+//}
 apply from: "$rootDir/scripts/publish-module.gradle"

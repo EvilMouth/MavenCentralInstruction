@@ -41,7 +41,7 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
 }
 
-ext {
-    PUBLISH_ARTIFACT_ID = project.name
-}
+//ext {
+//    PUBLISH_ARTIFACT_ID = project.name
+//}
 apply from: "$rootDir/scripts/publish-module.gradle"

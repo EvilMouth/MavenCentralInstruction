@@ -16,6 +16,9 @@ signing.key=xxx // gpg private key base64 encode
 ossrhUsername=xxx // sonatype account
 ossrhPassword=xxx
 sonatypeStagingProfileId=xxx // sonatype nexus oss staging profile id
+# optional
+snapshot=true
+release=false
 ```
 
 or env
@@ -43,7 +46,7 @@ plugins {
 }
 ext {
     PUBLISH_GROUP_ID = 'net.evilmouth'
-    PUBLISH_VERSION = '1.0.0-SNAPSHOT'
+    PUBLISH_VERSION = '1.0.0'
     
     // optional
     PUBLISH_LICENSE_NAME = your project lincense // default APACHE LICENSE, VERSION 2.0
@@ -51,7 +54,7 @@ ext {
     PUBLISH_DEVELOPER_NAME = your name
     PUBLISH_DEVELOPER_EMAIL = your email
 }
-apply from: 'https://raw.githubusercontent.com/EvilMouth/MavenCentralInstruction/2.0.0/scripts/publish-root.gradle'
+apply from: 'https://raw.githubusercontent.com/EvilMouth/MavenCentralInstruction/2.1.0/scripts/publish-root.gradle'
 ```
 
 ### 2.2 module/build.gardle
@@ -59,10 +62,11 @@ apply from: 'https://raw.githubusercontent.com/EvilMouth/MavenCentralInstruction
 add below codeblock in every lib-module
 
 ```groovy
+// optional
 ext {
-    PUBLISH_ARTIFACT_ID = project.name or custom
+    PUBLISH_ARTIFACT_ID = xxx // default project.name
 }
-apply from: 'https://raw.githubusercontent.com/EvilMouth/MavenCentralInstruction/2.0.0/scripts/publish-module.gradle'
+apply from: 'https://raw.githubusercontent.com/EvilMouth/MavenCentralInstruction/2.1.0/scripts/publish-module.gradle'
 ```
 
 ## optional
@@ -80,7 +84,7 @@ buildscripts {
       BUILD_WITH_REMOTE_MAVEN = false
       BUILD_WITH_LOCAL_MAVEN = false
   }
-  apply from: 'https://raw.githubusercontent.com/EvilMouth/MavenCentralInstruction/2.0.0/scripts/helper.gradle'
+  apply from: 'https://raw.githubusercontent.com/EvilMouth/MavenCentralInstruction/2.1.0/scripts/helper.gradle'
 }
 ```
 

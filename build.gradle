@@ -1,9 +1,9 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 buildscript {
-    ext {
-        BUILD_WITH_REMOTE_MAVEN = false
-        BUILD_WITH_LOCAL_MAVEN = false
-    }
+//    ext {
+//        BUILD_WITH_REMOTE_MAVEN = false
+//        BUILD_WITH_LOCAL_MAVEN = false
+//    }
     apply from: "$rootDir/scripts/helper.gradle"
 
     repositories {
