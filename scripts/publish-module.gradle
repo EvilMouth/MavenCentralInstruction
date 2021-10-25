@@ -2,10 +2,10 @@ apply plugin: 'maven-publish'
 apply plugin: 'signing'
 apply plugin: 'org.jetbrains.dokka'
 
-def isAndroid = project.plugins.hasPlugin('com.android.library')
+def isAndroid = project.plugins.hasPlugin("com.android.library")
 
 task sourcesJar(type: Jar) {
-    archiveClassifier.set('sources')
+    archiveClassifier.set("sources")
     if (isAndroid) {
         // For Android libraries
         from android.sourceSets.main.java.srcDirs
@@ -28,7 +28,7 @@ if (isAndroid) {
 }
 
 task javadocJar(type: Jar, dependsOn: dokkaJavadoc) {
-    archiveClassifier.set('javadoc')
+    archiveClassifier.set("javadoc")
     from dokkaJavadoc.outputDirectory
 }
 
@@ -66,19 +66,19 @@ afterEvaluate {
                 // Mostly self-explanatory metadata
                 pom {
                     name = extOrProperty("PUBLISH_NAME", PUBLISH_ARTIFACT_ID)
-                    description = extOrProperty('PUBLISH_DESCRIPTION', "$PUBLISH_GROUP_ID:$PUBLISH_ARTIFACT_ID:$PUBLISH_VERSION")
-                    url = extOrProperty('PUBLISH_URL', removeSuffix(getGitHttpUrl(), ".git"))
+                    description = extOrProperty("PUBLISH_DESCRIPTION", "$PUBLISH_GROUP_ID:$PUBLISH_ARTIFACT_ID:$PUBLISH_VERSION")
+                    url = extOrProperty("PUBLISH_URL", removeSuffix(getGitHttpUrl(), ".git"))
                     licenses {
                         license {
-                            name = extOrProperty('PUBLISH_LICENSE_NAME', "APACHE LICENSE, VERSION 2.0")
-                            url = extOrProperty('PUBLISH_LICENSE_URL', "https://www.apache.org/licenses/LICENSE-2.0")
+                            name = extOrProperty("PUBLISH_LICENSE_NAME", "APACHE LICENSE, VERSION 2.0")
+                            url = extOrProperty("PUBLISH_LICENSE_URL", "https://www.apache.org/licenses/LICENSE-2.0")
                         }
                     }
                     developers {
                         developer {
-                            id = extOrProperty('PUBLISH_DEVELOPER_ID', PUBLISH_GROUP_ID)
-                            name = extOrProperty('PUBLISH_DEVELOPER_NAME', getGitUserName())
-                            email = extOrProperty('PUBLISH_DEVELOPER_EMAIL', getGitUserEmail())
+                            id = extOrProperty("PUBLISH_DEVELOPER_ID", PUBLISH_GROUP_ID)
+                            name = extOrProperty("PUBLISH_DEVELOPER_NAME", getGitUserName())
+                            email = extOrProperty("PUBLISH_DEVELOPER_EMAIL", getGitUserEmail())
                         }
                         // Add all other devs here...
                     }
@@ -86,10 +86,21 @@ afterEvaluate {
                     // Version control info - if you're using GitHub, follow the
                     // format as seen here
                     scm {
-                        connection = extOrProperty('PUBLISH_SCM_CONNECTION', "scm:git:" + getGitUrlComposition())
-                        developerConnection = extOrProperty('PUBLISH_SCM_DEVELOPERCONNECTION', "scm:git:ssh://" + getGitUrlComposition())
-                        url = extOrProperty('PUBLISH_SCM_URL', removeSuffix(getGitHttpUrl(), ".git"))
+                        connection = extOrProperty("PUBLISH_SCM_CONNECTION", "scm:git:" + getGitUrlComposition())
+                        developerConnection = extOrProperty("PUBLISH_SCM_DEVELOPERCONNECTION", "scm:git:ssh://" + getGitUrlComposition())
+                        url = extOrProperty("PUBLISH_SCM_URL", removeSuffix(getGitHttpUrl(), ".git"))
                     }
+                }
+            }
+        }
+
+        repositories {
+            maven {
+                name = "GitHubPackages"
+                url = "https://maven.pkg.github.com/" + System.getenv("GITHUB_REPOSITORY")
+                credentials {
+                    username = System.getenv("GITHUB_ACTOR")
+                    password = System.getenv("GITHUB_TOKEN")
                 }
             }
         }
@@ -109,10 +120,15 @@ if (!PUBLISH_VERSION.endsWith("-SNAPSHOT")) {
 
 /// utils
 
-Object extOrProperty(String key, String defaultValue = '') {
+Object extOrProperty(String key, String defaultValue = "") {
     return project.ext.find(key) ?: findProperty(key) ?: defaultValue
 }
 
+/**
+ * git@github.com:EvilMouth/MavenCentralInstruction.git
+ * or
+ * https://github.com/EvilMouth/MavenCentralInstruction.git
+ */
 static String getGitUrl() {
     try {
         String url = "git remote get-url origin".execute().text.trim()
@@ -124,10 +140,13 @@ static String getGitUrl() {
         }
         return url
     } catch (ignored) {
-        return ''
+        return ""
     }
 }
 
+/**
+ * https://github.com/EvilMouth/MavenCentralInstruction.git
+ */
 static String getGitHttpUrl() {
     def url = getGitUrl()
     if (url.startsWith("git@")) {
@@ -137,6 +156,9 @@ static String getGitHttpUrl() {
     }
 }
 
+/**
+ * github.com/EvilMouth/MavenCentralInstruction.git
+ */
 static String getGitUrlComposition() {
     def url = getGitUrl()
     if (url.startsWith("git@")) {
@@ -161,7 +183,7 @@ static String getGitUserName() {
     try {
         return "git config --get user.name".execute().text.trim()
     } catch (ignored) {
-        return ''
+        return ""
     }
 }
 
@@ -169,6 +191,6 @@ static String getGitUserEmail() {
     try {
         return "git config --get user.email".execute().text.trim()
     } catch (ignored) {
-        return ''
+        return ""
     }
 }
