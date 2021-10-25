@@ -7,8 +7,9 @@ ext["ossrhPassword"] = ''
 ext["sonatypeStagingProfileId"] = ''
 ext["snapshot"] = ''
 ext["release"] = ''
+ext["releaseVersion"] = ''
 
-File secretPropsFile = project.rootProject.file('local.properties')
+File secretPropsFile = project.rootProject.file("local.properties")
 if (secretPropsFile.exists()) {
     // Read local.properties file first if it exists
     Properties p = new Properties()
@@ -16,23 +17,28 @@ if (secretPropsFile.exists()) {
     p.each { name, value -> ext[name] = value }
 } else {
     // Use system environment variables
-    ext["ossrhUsername"] = System.getenv('OSSRH_USERNAME')
-    ext["ossrhPassword"] = System.getenv('OSSRH_PASSWORD')
-    ext["sonatypeStagingProfileId"] = System.getenv('SONATYPE_STAGING_PROFILE_ID')
-    ext["signing.keyId"] = System.getenv('SIGNING_KEY_ID')
-    ext["signing.password"] = System.getenv('SIGNING_PASSWORD')
-    ext["signing.key"] = System.getenv('SIGNING_KEY')
-    ext["snapshot"] = System.getenv('SNAPSHOT')
-    ext["release"] = System.getenv('RELEASE')
+    ext["ossrhUsername"] = System.getenv("OSSRH_USERNAME")
+    ext["ossrhPassword"] = System.getenv("OSSRH_PASSWORD")
+    ext["sonatypeStagingProfileId"] = System.getenv("SONATYPE_STAGING_PROFILE_ID")
+    ext["signing.keyId"] = System.getenv("SIGNING_KEY_ID")
+    ext["signing.password"] = System.getenv("SIGNING_PASSWORD")
+    ext["signing.key"] = System.getenv("SIGNING_KEY")
+    ext["snapshot"] = System.getenv("SNAPSHOT")
+    ext["release"] = System.getenv("RELEASE")
+    ext["releaseVersion"] = System.getenv("RELEASE_VERSION")
 }
 
+if (releaseVersion) {
+    println "declare releaseVersion: $releaseVersion"
+    PUBLISH_VERSION = releaseVersion
+}
 if (release) {
-    println 'release build, remove suffix "-SNAPSHOT" if exists'
+    println "release build, remove suffix \"-SNAPSHOT\" from version if it exists"
     if (PUBLISH_VERSION.endsWith("-SNAPSHOT")) {
         PUBLISH_VERSION = PUBLISH_VERSION.substring(0, PUBLISH_VERSION.length() - 9)
     }
 } else if (snapshot) {
-    println 'snapshot build, force version with suffix "-SNAPSHOT"'
+    println "snapshot build, add suffix \"-SNAPSHOT\" to version"
     if (!PUBLISH_VERSION.endsWith("-SNAPSHOT")) {
         PUBLISH_VERSION += "-SNAPSHOT"
     }
