@@ -32,7 +32,7 @@ or env
 
 ## 2. config gradle scripts
 
-### 2.1 root/build.gradle += [publish-root.gradle](https://raw.githubusercontent.com/EvilMouth/MavenCentralInstruction/2.1.0/scripts/publish-root.gradle)
+### 2.1 root/build.gradle += [publish-root.gradle](https://github.com/EvilMouth/MavenCentralInstruction/blob/2.1.0/scripts/publish-root.gradle)
 
 ```groovy
 buildscript {
@@ -57,7 +57,7 @@ ext {
 apply from: 'https://raw.githubusercontent.com/EvilMouth/MavenCentralInstruction/2.1.0/scripts/publish-root.gradle'
 ```
 
-### 2.2 module/build.gardle += [publish-module.gradle](https://raw.githubusercontent.com/EvilMouth/MavenCentralInstruction/2.1.0/scripts/publish-module.gradle)
+### 2.2 module/build.gardle += [publish-module.gradle](https://github.com/EvilMouth/MavenCentralInstruction/blob/2.1.0/scripts/publish-module.gradle)
 
 add below codeblock in every lib-module
 
@@ -71,7 +71,7 @@ apply from: 'https://raw.githubusercontent.com/EvilMouth/MavenCentralInstruction
 
 ## optional
 
-### apply [helper script](https://raw.githubusercontent.com/EvilMouth/MavenCentralInstruction/2.1.0/scripts/helper.gradle)
+### apply [helper script](https://github.com/EvilMouth/MavenCentralInstruction/blob/2.1.0/scripts/helper.gradle)
 
 - detect ci build functional
 - supply global variable: [useRemoteMaven useLocalMaven isCI ...]
@@ -132,4 +132,10 @@ jobs:
           SIGNING_PASSWORD: ${{ secrets.SIGNING_PASSWORD }}
           SIGNING_KEY: ${{ secrets.SIGNING_KEY }}
           SONATYPE_STAGING_PROFILE_ID: ${{ secrets.SONATYPE_STAGING_PROFILE_ID }}
+
+        # Runs upload
+      - name: Publish to Github Packages Repository
+        run: ./gradlew publishReleasePublicationToGitHubPackagesRepository
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 ```

@@ -2,6 +2,10 @@ name: Publish
 
 on:
   workflow_dispatch:
+    inputs:
+      release_version:
+        description: 'Release Version'
+        required: true
   release:
     # We'll run this workflow when a new GitHub release is created
     types: [ released ]
@@ -14,7 +18,7 @@ jobs:
     # mark release, and declare release version
     env:
       RELEASE: true
-      RELEASE_VERSION: ${{ github.event.release.tag_name }}
+      RELEASE_VERSION: ${{ github.event.release.tag_name || github.event.inputs.release_version }}
 
     steps:
       - name: Check out code
@@ -43,3 +47,9 @@ jobs:
           SIGNING_PASSWORD: ${{ secrets.SIGNING_PASSWORD }}
           SIGNING_KEY: ${{ secrets.SIGNING_KEY }}
           SONATYPE_STAGING_PROFILE_ID: ${{ secrets.SONATYPE_STAGING_PROFILE_ID }}
+
+        # Runs upload, Optional
+      - name: Publish to Github Packages Repository
+        run: ./gradlew publishReleasePublicationToGitHubPackagesRepository
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
