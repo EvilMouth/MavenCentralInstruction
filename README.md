@@ -33,7 +33,7 @@ or env
 
 ## 2. config gradle scripts
 
-### 2.1 root/build.gradle += [publish-root.gradle](https://github.com/EvilMouth/MavenCentralInstruction/blob/2.1.0/scripts/publish-root.gradle)
+### 2.1 root/build.gradle += [publish-root.gradle](https://github.com/EvilMouth/MavenCentralInstruction/blob/3.0.0/scripts/publish-root.gradle)
 
 ```groovy
 buildscript {
@@ -55,10 +55,10 @@ ext {
     PUBLISH_DEVELOPER_NAME = your name
     PUBLISH_DEVELOPER_EMAIL = your email
 }
-apply from: 'https://raw.githubusercontent.com/EvilMouth/MavenCentralInstruction/2.1.0/scripts/publish-root.gradle'
+apply from: 'https://raw.githubusercontent.com/EvilMouth/MavenCentralInstruction/3.0.0/scripts/publish-root.gradle'
 ```
 
-### 2.2 module/build.gardle += [publish-module.gradle](https://github.com/EvilMouth/MavenCentralInstruction/blob/2.1.0/scripts/publish-module.gradle)
+### 2.2 module/build.gardle += [publish-module.gradle](https://github.com/EvilMouth/MavenCentralInstruction/blob/3.0.0/scripts/publish-module.gradle)
 
 add below codeblock in every lib-module
 
@@ -67,7 +67,7 @@ add below codeblock in every lib-module
 ext {
     PUBLISH_ARTIFACT_ID = xxx // default project.name
 }
-apply from: 'https://raw.githubusercontent.com/EvilMouth/MavenCentralInstruction/2.1.0/scripts/publish-module.gradle'
+apply from: 'https://raw.githubusercontent.com/EvilMouth/MavenCentralInstruction/3.0.0/scripts/publish-module.gradle'
 ```
 
 ## Continuous integration with Github Actions
@@ -127,7 +127,7 @@ jobs:
 
 ## optional
 
-### apply [helper script](https://github.com/EvilMouth/MavenCentralInstruction/blob/2.1.0/scripts/helper.gradle)
+### apply [helper script](https://github.com/EvilMouth/MavenCentralInstruction/blob/3.0.0/scripts/helper.gradle)
 
 - detect ci build functional
 - supply global variable: [isCI ...]
@@ -140,6 +140,6 @@ buildscripts {
       BUILD_WITH_REMOTE_MAVEN = false
       BUILD_WITH_LOCAL_MAVEN = false
   }
-  apply from: 'https://raw.githubusercontent.com/EvilMouth/MavenCentralInstruction/2.1.0/scripts/helper.gradle'
+  apply from: 'https://raw.githubusercontent.com/EvilMouth/MavenCentralInstruction/3.0.0/scripts/helper.gradle'
 }
 ```
