@@ -104,6 +104,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       RELEASE: true
+      RELEASE_VERSION: ${{ github.event.release.tag_name }}
     steps:
       - name: Check out code
         uses: actions/checkout@v2
