@@ -74,7 +74,7 @@ apply from: 'https://raw.githubusercontent.com/EvilMouth/MavenCentralInstruction
 ### apply [helper script](https://github.com/EvilMouth/MavenCentralInstruction/blob/2.1.0/scripts/helper.gradle)
 
 - detect ci build functional
-- supply global variable: [useRemoteMaven useLocalMaven isCI ...]
+- supply global variable: [isCI ...]
 
 ```groovy
 // in root/build.gradle

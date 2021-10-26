@@ -38,7 +38,7 @@ artifacts {
 }
 
 def PUBLISH_GROUP_ID = PUBLISH_GROUP_ID
-def PUBLISH_ARTIFACT_ID = extOrProperty("PUBLISH_ARTIFACT_ID", project.name)
+def PUBLISH_ARTIFACT_ID = propertyOrDefault("PUBLISH_ARTIFACT_ID", project.name)
 def PUBLISH_VERSION = PUBLISH_VERSION
 
 group = PUBLISH_GROUP_ID
@@ -66,20 +66,20 @@ afterEvaluate {
 
                 // Mostly self-explanatory metadata
                 pom {
-                    name = extOrProperty("PUBLISH_NAME", PUBLISH_ARTIFACT_ID)
-                    description = extOrProperty("PUBLISH_DESCRIPTION", "$PUBLISH_GROUP_ID:$PUBLISH_ARTIFACT_ID:$PUBLISH_VERSION")
-                    url = extOrProperty("PUBLISH_URL", removeSuffix(getGitHttpUrl(), ".git"))
+                    name = propertyOrDefault("PUBLISH_NAME", PUBLISH_ARTIFACT_ID)
+                    description = propertyOrDefault("PUBLISH_DESCRIPTION", "$PUBLISH_GROUP_ID:$PUBLISH_ARTIFACT_ID:$PUBLISH_VERSION")
+                    url = propertyOrDefault("PUBLISH_URL", removeSuffix(getGitHttpUrl(), ".git"))
                     licenses {
                         license {
-                            name = extOrProperty("PUBLISH_LICENSE_NAME", "APACHE LICENSE, VERSION 2.0")
-                            url = extOrProperty("PUBLISH_LICENSE_URL", "https://www.apache.org/licenses/LICENSE-2.0")
+                            name = propertyOrDefault("PUBLISH_LICENSE_NAME", "APACHE LICENSE, VERSION 2.0")
+                            url = propertyOrDefault("PUBLISH_LICENSE_URL", "https://www.apache.org/licenses/LICENSE-2.0")
                         }
                     }
                     developers {
                         developer {
-                            id = extOrProperty("PUBLISH_DEVELOPER_ID", PUBLISH_GROUP_ID)
-                            name = extOrProperty("PUBLISH_DEVELOPER_NAME", getGitUserName())
-                            email = extOrProperty("PUBLISH_DEVELOPER_EMAIL", getGitUserEmail())
+                            id = propertyOrDefault("PUBLISH_DEVELOPER_ID", PUBLISH_GROUP_ID)
+                            name = propertyOrDefault("PUBLISH_DEVELOPER_NAME", getGitUserName())
+                            email = propertyOrDefault("PUBLISH_DEVELOPER_EMAIL", getGitUserEmail())
                         }
                         // Add all other devs here...
                     }
@@ -87,9 +87,9 @@ afterEvaluate {
                     // Version control info - if you're using GitHub, follow the
                     // format as seen here
                     scm {
-                        connection = extOrProperty("PUBLISH_SCM_CONNECTION", "scm:git:" + getGitUrlComposition())
-                        developerConnection = extOrProperty("PUBLISH_SCM_DEVELOPERCONNECTION", "scm:git:ssh://" + getGitUrlComposition())
-                        url = extOrProperty("PUBLISH_SCM_URL", removeSuffix(getGitHttpUrl(), ".git"))
+                        connection = propertyOrDefault("PUBLISH_SCM_CONNECTION", "scm:git:" + getGitUrlComposition())
+                        developerConnection = propertyOrDefault("PUBLISH_SCM_DEVELOPERCONNECTION", "scm:git:ssh://" + getGitUrlComposition())
+                        url = propertyOrDefault("PUBLISH_SCM_URL", removeSuffix(getGitHttpUrl(), ".git"))
                     }
                 }
             }
@@ -121,8 +121,8 @@ if (!PUBLISH_VERSION.endsWith("-SNAPSHOT")) {
 
 /// utils
 
-Object extOrProperty(String key, String defaultValue = "") {
-    return project.ext.find(key) ?: findProperty(key) ?: defaultValue
+Object propertyOrDefault(String key, String defaultValue = "") {
+    return findProperty(key) ?: defaultValue
 }
 
 /**

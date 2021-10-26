@@ -28,6 +28,12 @@ if (secretPropsFile.exists()) {
     ext["releaseVersion"] = System.getenv("RELEASE_VERSION")
 }
 
+// Declaration check
+if (!ext.has("PUBLISH_VERSION")) {
+    throw new IllegalArgumentException("PUBLISH_VERSION must declare in ext since it will alters by " +
+            "[snapshot/release/releaseVersion]")
+}
+
 if (releaseVersion) {
     println "declare releaseVersion: $releaseVersion"
     PUBLISH_VERSION = releaseVersion

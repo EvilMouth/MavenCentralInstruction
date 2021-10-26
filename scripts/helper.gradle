@@ -1,9 +1,11 @@
+if (!ext.has("BUILD_WITH_REMOTE_MAVEN")) {
+    ext["BUILD_WITH_REMOTE_MAVEN"] = false
+}
+if (!ext.has("BUILD_WITH_LOCAL_MAVEN")) {
+    ext["BUILD_WITH_LOCAL_MAVEN"] = false
+}
+
 ext {
-    useRemoteMaven = extOrProperty("BUILD_WITH_REMOTE_MAVEN", "false").toString() == "true"
-    useLocalMaven = extOrProperty("BUILD_WITH_LOCAL_MAVEN", "false").toString() == "true"
-
-    extOrProperty = this.&extOrProperty
-
     isCI = this.&isCI()
     isGithubCI = this.&isGithubCI()
     isJitpackCI = this.&isJitpackCI()
@@ -15,15 +17,11 @@ ext {
     println "isCI: $isCI"
     if (isCI) {
         println "ci building, force building with project local dependencies"
-        useRemoteMaven = false
-        useLocalMaven = false
+        BUILD_WITH_REMOTE_MAVEN = false
+        BUILD_WITH_LOCAL_MAVEN = false
     }
-    println "useRemoteMaven: $useRemoteMaven"
-    println "useLocalMaven: $useLocalMaven"
-}
-
-Object extOrProperty(String key, String defaultValue = "") {
-    return project.ext.find(key) ?: findProperty(key) ?: defaultValue
+    println "BUILD_WITH_REMOTE_MAVEN: $BUILD_WITH_REMOTE_MAVEN"
+    println "BUILD_WITH_LOCAL_MAVEN: $BUILD_WITH_LOCAL_MAVEN"
 }
 
 static boolean isCI() {
