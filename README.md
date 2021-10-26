@@ -19,6 +19,7 @@ sonatypeStagingProfileId=xxx // sonatype nexus oss staging profile id
 # optional
 snapshot=true
 release=false
+releaseVersion=1.0.0
 ```
 
 or env
@@ -46,7 +47,7 @@ plugins {
 }
 ext {
     PUBLISH_GROUP_ID = 'net.evilmouth'
-    PUBLISH_VERSION = '1.0.0'
+    PUBLISH_VERSION = '1.0.0-SNAPSHOT'
     
     // optional
     PUBLISH_LICENSE_NAME = your project lincense // default APACHE LICENSE, VERSION 2.0
@@ -69,26 +70,7 @@ ext {
 apply from: 'https://raw.githubusercontent.com/EvilMouth/MavenCentralInstruction/2.1.0/scripts/publish-module.gradle'
 ```
 
-## optional
-
-### apply [helper script](https://github.com/EvilMouth/MavenCentralInstruction/blob/2.1.0/scripts/helper.gradle)
-
-- detect ci build functional
-- supply global variable: [isCI ...]
-
-```groovy
-// in root/build.gradle
-buildscripts {
-  // optional
-  ext {
-      BUILD_WITH_REMOTE_MAVEN = false
-      BUILD_WITH_LOCAL_MAVEN = false
-  }
-  apply from: 'https://raw.githubusercontent.com/EvilMouth/MavenCentralInstruction/2.1.0/scripts/helper.gradle'
-}
-```
-
-### Continuous integration with Github Actions
+## Continuous integration with Github Actions
 
 ```yml
 name: Publish
@@ -133,7 +115,7 @@ jobs:
           SIGNING_KEY: ${{ secrets.SIGNING_KEY }}
           SONATYPE_STAGING_PROFILE_ID: ${{ secrets.SONATYPE_STAGING_PROFILE_ID }}
 
-        # Runs upload
+        # Runs upload, Optional
       - name: Publish to Github Packages Repository
         run: ./gradlew publishReleasePublicationToGitHubPackagesRepository
         env:
@@ -141,4 +123,23 @@ jobs:
           SIGNING_KEY_ID: ${{ secrets.SIGNING_KEY_ID }}
           SIGNING_PASSWORD: ${{ secrets.SIGNING_PASSWORD }}
           SIGNING_KEY: ${{ secrets.SIGNING_KEY }}
+```
+
+## optional
+
+### apply [helper script](https://github.com/EvilMouth/MavenCentralInstruction/blob/2.1.0/scripts/helper.gradle)
+
+- detect ci build functional
+- supply global variable: [isCI ...]
+
+```groovy
+// in root/build.gradle
+buildscripts {
+  // optional
+  ext {
+      BUILD_WITH_REMOTE_MAVEN = false
+      BUILD_WITH_LOCAL_MAVEN = false
+  }
+  apply from: 'https://raw.githubusercontent.com/EvilMouth/MavenCentralInstruction/2.1.0/scripts/helper.gradle'
+}
 ```
