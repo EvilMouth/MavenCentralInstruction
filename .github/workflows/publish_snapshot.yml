@@ -8,8 +8,11 @@ jobs:
   publish:
     name: Release build and publish
     runs-on: ubuntu-latest
+
+    # mark snapshot
     env:
       SNAPSHOT: true
+
     steps:
       - name: Check out code
         uses: actions/checkout@v2
@@ -28,8 +31,8 @@ jobs:
       - name: Source jar and dokka
         run: ./gradlew sourcesJar javadocJar
 
-        # Runs upload, and then closes & releases the repository
-      - name: Publish to MavenCentral
+        # Runs upload
+      - name: Publish to MavenCentral Snapshot
         run: ./gradlew publishReleasePublicationToSonatypeRepository
         env:
           OSSRH_USERNAME: ${{ secrets.OSSRH_USERNAME }}
@@ -38,3 +41,9 @@ jobs:
           SIGNING_PASSWORD: ${{ secrets.SIGNING_PASSWORD }}
           SIGNING_KEY: ${{ secrets.SIGNING_KEY }}
           SONATYPE_STAGING_PROFILE_ID: ${{ secrets.SONATYPE_STAGING_PROFILE_ID }}
+
+        # Runs upload
+      - name: Publish to Github Packages Repository
+        run: ./gradlew publishReleasePublicationToGitHubPackagesRepository
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
